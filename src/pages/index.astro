@@ -1,0 +1,73 @@
+---
+import Label from "../components/Label.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  description="Convert Georgian transliteration to English"
+  title="Georgian Transliteration Converter"
+>
+  <div class="mx-auto flex flex-col gap-8">
+    <section>
+      <form class="flex flex-col gap-2" id="text-conversion-form">
+        <div class="flex flex-col">
+          <Label for="source-text" text="Source text" />
+          <textarea
+            class="textarea textarea-bordered textarea-primary"
+            id="source-text"
+            name="source-text"
+            placeholder="Type Georgian transliteration here"
+            rows="5"></textarea>
+          <div class="ml-auto text-sm text-gray-500" id="letters-count">
+            0 letters
+          </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Convert</button>
+      </form>
+    </section>
+
+    <section>
+      <div class="flex flex-col">
+        <Label for="result-text" text="Result text" />
+        <textarea
+          aria-label="Result text"
+          class="textarea textarea-bordered"
+          id="result-text"
+          name="result-text"
+          rows="5"></textarea>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    import transliterateToGeorgian from "../helpers/transliterateToGeorgian";
+
+    const sourceTextarea = document.querySelector(
+      "#source-text",
+    ) as HTMLTextAreaElement;
+    const lettersCountElement = document.querySelector(
+      "#letters-count",
+    ) as HTMLDivElement;
+
+    const resultTextarea = document.querySelector(
+      "#result-text",
+    ) as HTMLTextAreaElement;
+
+    const textConversionForm = document.querySelector(
+      "#text-conversion-form",
+    ) as HTMLFormElement;
+
+    sourceTextarea.addEventListener("input", (event) => {
+      const target = event.target as HTMLTextAreaElement;
+      lettersCountElement.textContent = `${target.value.length} letters`;
+    });
+
+    textConversionForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const text = sourceTextarea.value;
+      resultTextarea.value = transliterateToGeorgian(text);
+    });
+  </script>
+</Layout>
