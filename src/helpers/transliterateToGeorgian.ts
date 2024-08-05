@@ -37,16 +37,41 @@ const georgianTranslitMap = {
 };
 
 export default function transliterateToGeorgian(text: string): string {
-  let georgianText = text.toLowerCase();
+  const urlRegex = /((https?|ftp|file):\/\/\S+)/g;
 
   const sortedKeys = Object.keys(georgianTranslitMap).sort(
     (a, b) => b.length - a.length,
   ) as (keyof typeof georgianTranslitMap)[];
 
+  const urlMap = new Map<string, string>();
+  let index = 0;
+  let modifiedText = text
+    .split(" ")
+    .map((word) => {
+      if (urlRegex.test(word)) {
+        const placeholder = `__###_${index}__`;
+        urlMap.set(placeholder, word);
+        index++;
+        return placeholder;
+      }
+      return word;
+    })
+    .join(" ");
+
   for (const latin of sortedKeys) {
     const georgian = georgianTranslitMap[latin];
-    georgianText = georgianText.replaceAll(new RegExp(latin, "g"), georgian);
+    const regex = new RegExp(latin, "gi");
+    modifiedText = modifiedText.replace(regex, (match) => {
+      return match === match.toUpperCase()
+        ? georgian.toUpperCase()
+        : georgian.toLowerCase();
+    });
   }
 
-  return georgianText;
+  // Восстановление URL из плейсхолдеров
+  for (const [placeholder, url] of urlMap.entries()) {
+    modifiedText = modifiedText.replaceAll(placeholder, url);
+  }
+
+  return modifiedText;
 }
