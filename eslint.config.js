@@ -24,6 +24,6 @@ export default tseslint.config(
       "unicorn/prevent-abbreviations": "off",
     },
   },
-  { ignores: ["dist/", "astro/"] },
+  { ignores: ["node_modules/", "dist/", "dev-dist/", ".vercel/", "astro/"] },
   prettierConfig,
 );
