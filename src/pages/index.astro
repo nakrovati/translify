@@ -1,7 +1,6 @@
 ---
-import Label from "../ui/Label.astro";
 import Layout from "../layouts/Layout.astro";
-import Copy from "../assets/Copy.astro";
+import Copy from "../assets/icons/Copy.astro";
 ---
 
 <Layout
@@ -23,60 +22,64 @@ import Copy from "../assets/Copy.astro";
         </div>
       </div>
 
-      <button class="btn btn-primary mx-auto w-full max-w-96" type="submit"
-        >Convert</button
-      >
+      <button class="btn btn-primary mx-auto w-full max-w-96" type="submit">
+        Convert
+      </button>
 
-      <div>
-        <div class="flex flex-col">
-          <label for="result-text" class="text-sm">Result text:</label>
-          <textarea
-            aria-label="Result text"
-            class="textarea textarea-bordered"
-            id="result-text"
-            name="result-text"
-            rows="5"
-          >
-          </textarea>
-          <button
-            class="btn btn-square ml-auto"
-            type="button"
-            aria-label="Copy result"
-            ><Copy class="size-6" />
-          </button>
-        </div>
+      <div class="flex flex-col">
+        <label for="result-text" class="text-sm">Result text:</label>
+        <textarea
+          class="textarea textarea-bordered"
+          id="result-text"
+          name="result-text"
+          rows="5"
+          placeholder=""></textarea>
       </div>
+
+      <button
+        class="btn btn-square ml-auto"
+        type="button"
+        id="copy-btn"
+        aria-label="Copy result"
+      >
+        <Copy class="size-6" />
+      </button>
     </form>
-
-    <script>
-      import transliterateToGeorgian from "../helpers/transliterateToGeorgian";
-
-      const sourceTextarea = document.querySelector(
-        "#source-text",
-      ) as HTMLTextAreaElement;
-      const lettersCountElement = document.querySelector(
-        "#letters-count",
-      ) as HTMLDivElement;
-
-      const resultTextarea = document.querySelector(
-        "#result-text",
-      ) as HTMLTextAreaElement;
-
-      const textConversionForm = document.querySelector(
-        "#text-conversion-form",
-      ) as HTMLFormElement;
-
-      sourceTextarea.addEventListener("input", (event) => {
-        const target = event.target as HTMLTextAreaElement;
-        lettersCountElement.textContent = String(target.value.length);
-      });
-
-      textConversionForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const text = sourceTextarea.value;
-        resultTextarea.value = transliterateToGeorgian(text);
-      });
-    </script>
   </div>
+
+  <script>
+    import transliterateToGeorgian from "../helpers/transliterateToGeorgian";
+
+    const sourceTextarea = document.querySelector(
+      "#source-text",
+    ) as HTMLTextAreaElement;
+    const resultTextarea = document.querySelector(
+      "#result-text",
+    ) as HTMLTextAreaElement;
+
+    const lettersCountElement = document.querySelector(
+      "#letters-count",
+    ) as HTMLDivElement;
+    const textConversionForm = document.querySelector(
+      "#text-conversion-form",
+    ) as HTMLFormElement;
+    const copyBtn = document.querySelector("#copy-btn") as HTMLButtonElement;
+
+    sourceTextarea.addEventListener("input", (event) => {
+      const target = event.target as HTMLTextAreaElement;
+      lettersCountElement.textContent = String(target.value.length);
+    });
+
+    textConversionForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const text = sourceTextarea.value;
+      resultTextarea.value = transliterateToGeorgian(text);
+    });
+
+    copyBtn.addEventListener("click", () => {
+      const copyText = resultTextarea.value;
+      navigator.clipboard.writeText(copyText);
+    });
+  </script>
 </Layout>
