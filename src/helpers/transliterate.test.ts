@@ -1,35 +1,35 @@
 import { describe, expect, test } from "vitest";
 
-import transliterateToGeorgian from "./transliterateToGeorgian";
+import { transliterate } from "./transliterate";
 
-describe("transliterateToGeorgian", () => {
+describe("transliterate", () => {
   describe("common cases", () => {
     test("should transliterate `gamarjoba` to georgian", () => {
       const text = "gamarjoba";
       const expected = "გამარჯობა";
 
-      expect(transliterateToGeorgian(text)).toBe(expected);
+      expect(transliterate(text)).toBe(expected);
     });
 
     test("should transliterate `sakartvelo` to georgian", () => {
       const text = "sakartvelo";
       const expected = "საქართველო";
 
-      expect(transliterateToGeorgian(text)).toBe(expected);
+      expect(transliterate(text)).toBe(expected);
     });
 
     test("should transliterate `tbilisi`to georgian", () => {
       const text = "tbilisi";
       const expected = "თბილისი";
 
-      expect(transliterateToGeorgian(text)).toBe(expected);
+      expect(transliterate(text)).toBe(expected);
     });
 
     test("should transliterate `ch'aba` to georgian", () => {
       const text = "ch'aba";
       const expected = "ჭაბა";
 
-      expect(transliterateToGeorgian(text)).toBe(expected);
+      expect(transliterate(text)).toBe(expected);
     });
   });
 
@@ -40,7 +40,7 @@ describe("transliterateToGeorgian", () => {
       const expected =
         "Გაცნობებთ, რომ 31 ივლისს, საყართველოს უმეთეს რეგიონში მოსალოდნელია ამინდის მქვეთრი გაუარესება.";
 
-      const result = transliterateToGeorgian(text);
+      const result = transliterate(text);
 
       expect(result).toBe(expected);
     });
@@ -49,7 +49,7 @@ describe("transliterateToGeorgian", () => {
       const text = "mosakhleobas movutsodebt siphrtkhilisken.";
       const expected = "მოსახლეობას მოვუცოდებთ სიფჰრთხილისქენ.";
 
-      const result = transliterateToGeorgian(text);
+      const result = transliterate(text);
 
       expect(result).toBe(expected);
     });
@@ -60,7 +60,7 @@ describe("transliterateToGeorgian", () => {
       const text = "ikhilet http://example.com det'alebistvis";
       const expected = "იხილეთ http://example.com დეტალებისთვის";
 
-      const result = transliterateToGeorgian(text);
+      const result = transliterate(text);
 
       expect(result).toBe(expected);
     });
@@ -69,7 +69,7 @@ describe("transliterateToGeorgian", () => {
       const text = "ikhilet https://example.com det'alebistvis";
       const expected = "იხილეთ https://example.com დეტალებისთვის";
 
-      const result = transliterateToGeorgian(text);
+      const result = transliterate(text);
 
       expect(result).toBe(expected);
     });
@@ -78,7 +78,7 @@ describe("transliterateToGeorgian", () => {
       const text = "ikhilet ftp://example.com det'alebistvis";
       const expected = "იხილეთ ftp://example.com დეტალებისთვის";
 
-      const result = transliterateToGeorgian(text);
+      const result = transliterate(text);
 
       expect(result).toBe(expected);
     });
@@ -87,7 +87,7 @@ describe("transliterateToGeorgian", () => {
       const text = "ikhilet file://example.com det'alebistvis";
       const expected = "იხილეთ file://example.com დეტალებისთვის";
 
-      const result = transliterateToGeorgian(text);
+      const result = transliterate(text);
 
       expect(result).toBe(expected);
     });

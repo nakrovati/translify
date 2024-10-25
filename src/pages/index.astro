@@ -22,7 +22,7 @@ import Copy from "../assets/icons/Copy.astro";
         </div>
       </div>
 
-      <button class="btn btn-primary mx-auto w-full max-w-96" type="submit">
+      <button class="btn btn-primary mx-auto w-full max-w-48" type="submit">
         Convert
       </button>
 
@@ -48,7 +48,7 @@ import Copy from "../assets/icons/Copy.astro";
   </div>
 
   <script>
-    import transliterateToGeorgian from "../helpers/transliterateToGeorgian";
+    import { transliterate } from "../helpers/transliterate";
 
     const sourceTextarea = document.querySelector(
       "#source-text",
@@ -74,7 +74,7 @@ import Copy from "../assets/icons/Copy.astro";
       event.preventDefault();
 
       const text = sourceTextarea.value;
-      resultTextarea.value = transliterateToGeorgian(text);
+      resultTextarea.value = transliterate(text);
     });
 
     copyBtn.addEventListener("click", () => {
