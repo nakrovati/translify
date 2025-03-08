@@ -4,29 +4,33 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout
-  description="Convert Georgian transliteration to English"
+  description="Convert Georgian transliteration to back the Gerogian"
   title="Translify: Georgian Transliteration Converter"
 >
   <div class="mx-auto flex flex-col gap-8">
-    <form class="flex flex-col gap-2" id="text-conversion-form">
-      <div class="flex flex-col">
+    <section class="flex flex-col gap-2">
+      <div>
         <label class="text-sm" for="source-text">Source text</label>
         <textarea
+          aria-describedby="char-count"
           class="textarea w-full"
           id="source-text"
           name="source-text"
-          placeholder="Type Georgian transliteration here"
+          placeholder="Type Gerogian transliterated (Latin) text here"
           rows="5"></textarea>
-        <div class="ml-auto text-sm" id="letters-count" title="Letters count">
-          0
-        </div>
+        <div aria-live="polite" class="text-right" id="char-count">0</div>
       </div>
 
-      <button class="btn btn-primary mx-auto w-full max-w-48" type="submit">
+      <button
+        class="btn btn-primary mx-auto w-full max-w-48"
+        id="transliterate-btn"
+      >
         Convert
       </button>
+    </section>
 
-      <div class="flex flex-col">
+    <section class="flex flex-col gap-2">
+      <div>
         <label class="text-sm" for="result-text">Result text:</label>
         <textarea
           class="textarea w-full"
@@ -44,42 +48,40 @@ import Layout from "../layouts/Layout.astro";
       >
         <Copy class="size-6" />
       </button>
-    </form>
+    </section>
   </div>
-
-  <script>
-    import { transliterate } from "../helpers/transliterate";
-
-    const sourceTextarea = document.querySelector(
-      "#source-text",
-    ) as HTMLTextAreaElement;
-    const resultTextarea = document.querySelector(
-      "#result-text",
-    ) as HTMLTextAreaElement;
-
-    const lettersCountElement = document.querySelector(
-      "#letters-count",
-    ) as HTMLDivElement;
-    const textConversionForm = document.querySelector(
-      "#text-conversion-form",
-    ) as HTMLFormElement;
-    const copyBtn = document.querySelector("#copy-btn") as HTMLButtonElement;
-
-    sourceTextarea.addEventListener("input", (event) => {
-      const target = event.target as HTMLTextAreaElement;
-      lettersCountElement.textContent = String(target.value.length);
-    });
-
-    textConversionForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const text = sourceTextarea.value;
-      resultTextarea.value = transliterate(text);
-    });
-
-    copyBtn.addEventListener("click", () => {
-      const copyText = resultTextarea.value;
-      navigator.clipboard.writeText(copyText);
-    });
-  </script>
 </Layout>
+
+<script>
+  import { transliterate } from "../helpers/transliterate";
+
+  const sourceTextarea = document.querySelector(
+    "#source-text",
+  ) as HTMLTextAreaElement;
+  const resultTextarea = document.querySelector(
+    "#result-text",
+  ) as HTMLTextAreaElement;
+
+  const charCountElement = document.querySelector(
+    "#char-count",
+  ) as HTMLDivElement;
+  const transliterateButton = document.querySelector(
+    "#transliterate-btn",
+  ) as HTMLFormElement;
+  const copyBtn = document.querySelector("#copy-btn") as HTMLButtonElement;
+
+  sourceTextarea.addEventListener("input", (event) => {
+    const target = event.target as HTMLTextAreaElement;
+    charCountElement.textContent = String(target.value.length);
+  });
+
+  transliterateButton.addEventListener("click", () => {
+    const text = sourceTextarea.value;
+    resultTextarea.value = transliterate(text);
+  });
+
+  copyBtn.addEventListener("click", () => {
+    const copyText = resultTextarea.value;
+    navigator.clipboard.writeText(copyText);
+  });
+</script>
