@@ -1,5 +1,5 @@
-import tailwind from "@astrojs/tailwind";
-import vercel from "@astrojs/vercel/static";
+import vercel from "@astrojs/vercel";
+import tailwindcss from "@tailwindcss/vite";
 import AstroPWA from "@vite-pwa/astro";
 import { defineConfig } from "astro/config";
 
@@ -11,12 +11,16 @@ const isDev = import.meta.env.DEV;
 export default defineConfig({
   adapter: vercel({ webAnalytics: { enabled: true } }),
   integrations: [
-    tailwind(),
     AstroPWA({
+      base: "/",
       devOptions: { enabled: isDev },
       manifest,
       registerType: "autoUpdate",
+      scope: "/",
     }),
   ],
   output: "static",
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

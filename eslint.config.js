@@ -11,7 +11,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   ...astroPlugin.configs.recommended,
   perfectionistPlugin.configs["recommended-natural"],
-  unicornPlugin.configs["flat/recommended"],
+  unicornPlugin.configs.recommended,
   {
     languageOptions: {
       globals: {
