@@ -19,19 +19,19 @@ const { description, title } = Astro.props;
   <head>
     <meta charset="utf8" />
     <meta content="width=device-width" name="viewport" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
-    <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
     <meta content={Astro.generator} name="generator" />
     <meta
-      name="theme-color"
       content="#ffffff"
       media="(prefers-color-scheme: light)"
+      name="theme-color"
     />
     <meta
-      name="theme-color"
       content="#000000"
       media="(prefers-color-scheme: dark)"
+      name="theme-color"
     />
     <title>{title}</title>
     <meta content={description} name="description" />
@@ -42,7 +42,7 @@ const { description, title } = Astro.props;
     <div class="min-h-dvh">
       <Header />
       <main>
-        <div class="container mx-auto px-2 py-8">
+        <div class="mx-auto max-w-2xl px-2 py-8">
           <slot />
         </div>
       </main>

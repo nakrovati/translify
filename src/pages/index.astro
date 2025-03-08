@@ -1,6 +1,6 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import Copy from "../assets/icons/Copy.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout
@@ -10,9 +10,9 @@ import Copy from "../assets/icons/Copy.astro";
   <div class="mx-auto flex flex-col gap-8">
     <form class="flex flex-col gap-2" id="text-conversion-form">
       <div class="flex flex-col">
-        <label for="source-text" class="text-sm">Source text</label>
+        <label class="text-sm" for="source-text">Source text</label>
         <textarea
-          class="textarea textarea-bordered"
+          class="textarea w-full"
           id="source-text"
           name="source-text"
           placeholder="Type Georgian transliteration here"
@@ -27,20 +27,20 @@ import Copy from "../assets/icons/Copy.astro";
       </button>
 
       <div class="flex flex-col">
-        <label for="result-text" class="text-sm">Result text:</label>
+        <label class="text-sm" for="result-text">Result text:</label>
         <textarea
-          class="textarea textarea-bordered"
+          class="textarea w-full"
           id="result-text"
           name="result-text"
-          rows="5"
-          placeholder=""></textarea>
+          placeholder="Result text"
+          rows="5"></textarea>
       </div>
 
       <button
-        class="btn btn-square ml-auto"
-        type="button"
-        id="copy-btn"
         aria-label="Copy result"
+        class="btn btn-square ml-auto"
+        id="copy-btn"
+        type="button"
       >
         <Copy class="size-6" />
       </button>

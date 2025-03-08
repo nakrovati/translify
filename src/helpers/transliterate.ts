@@ -36,6 +36,10 @@ const georgianTranslitMap = {
   zh: "ჟ",
 };
 
+interface TransliterateOptions {
+  preserveUrls?: boolean;
+}
+
 function replaceUrls(text: string) {
   const urlRegex = /((https?|ftp|file):\/\/\S+)/g;
   const urlMap = new Map<string, string>();
@@ -79,10 +83,6 @@ function transliterateText(
     });
   }
   return modifiedText;
-}
-
-interface TransliterateOptions {
-  preserveUrls?: boolean;
 }
 
 const defaultOptions: TransliterateOptions = {
