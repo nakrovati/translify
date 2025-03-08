@@ -1,6 +1,12 @@
 {
-  "name": "georgian-translit-converter",
+  "name": "translify",
   "version": "0.0.1",
+  "private": true,
+  "keywords": [
+    "transliteration",
+    "georgian",
+    "converter"
+  ],
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
