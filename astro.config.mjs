@@ -13,6 +13,9 @@ export default defineConfig({
   integrations: [
     AstroPWA({
       base: "/",
+      devOptions: {
+        enabled: !isDev,
+      },
       manifest,
       registerType: "autoUpdate",
       scope: "/",
