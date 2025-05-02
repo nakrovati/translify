@@ -50,3 +50,19 @@ const { description, title } = Astro.props;
     <Footer />
   </body>
 </html>
+
+<script>
+  const dropdowns = document.querySelectorAll(
+    ".dropdown",
+  ) as NodeListOf<HTMLDetailsElement>;
+
+  function handleClickOutside(event: MouseEvent) {
+    for (const dropdown of dropdowns) {
+      if (!dropdown.contains(event.target as HTMLElement)) {
+        dropdown.removeAttribute("open");
+      }
+    }
+  }
+
+  document.addEventListener("click", handleClickOutside);
+</script>
