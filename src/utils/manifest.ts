@@ -4,7 +4,7 @@ export const manifest: Partial<ManifestOptions> = {
   background_color: "#ffffff", // Change this to your background color.
   description:
     "Online tool for converting Georgian transliteration (Latin script) to the Georgian alphabet", // Change this to your websites description.
-  display: "minimal-ui",
+  display: "standalone",
   icons: [
     {
       purpose: "any",
