@@ -1,3 +1,4 @@
+// @ts-check
 import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import AstroPWA from "@vite-pwa/astro";

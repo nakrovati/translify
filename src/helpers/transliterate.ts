@@ -69,7 +69,7 @@ function transliterateText(
 ): string {
   let modifiedText = text;
 
-  const sortedKeys = Object.keys(translitMap).sort(
+  const sortedKeys = Object.keys(translitMap).toSorted(
     (a, b) => b.length - a.length,
   );
 

@@ -1,7 +1,5 @@
 # build output
 dist/
-dev-dist/
-.vercel/
 
 # generated types
 .astro/
@@ -22,8 +20,11 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# jetbrains setting folder
+# IDE setting folders
 .idea/
 .zed/
 .vscode/*
 !.vscode/launch.json
+
+# vercel output folder
+.vercel/
