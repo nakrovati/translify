@@ -12,6 +12,10 @@
 <script>
   const StorageKey = "translify:theme";
 
+  const selectThemeButtons = document.querySelectorAll<HTMLButtonElement>(
+    "[data-select-theme]",
+  );
+
   globalThis.addEventListener("DOMContentLoaded", () => {
     initTheme();
     setupThemeButtons();
@@ -43,6 +47,8 @@
       document.documentElement.dataset.theme = theme;
     }
     localStorage.setItem(StorageKey, theme);
+
+    updateActiveThemeButton(theme);
   }
 
   function setupThemeButtons() {
@@ -60,5 +66,14 @@
     const mediaQuery = globalThis.matchMedia("(prefers-color-scheme: dark)");
 
     mediaQuery.addEventListener("change", handleSystemThemeChange);
+  }
+
+  function updateActiveThemeButton(theme: string) {
+    for (const button of selectThemeButtons) {
+      button.classList.toggle(
+        "menu-active",
+        button.dataset.selectTheme === theme,
+      );
+    }
   }
 </script>
