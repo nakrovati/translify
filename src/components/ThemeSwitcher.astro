@@ -1,5 +1,15 @@
+---
+import PhDesktop from "../assets/icons/PhDesktop.astro";
+import PhMoon from "../assets/icons/PhMoon.astro";
+import PhSun from "../assets/icons/PhSun.astro";
+---
+
 <details class="dropdown dropdown-end" id="theme-switcher">
-  <summary class="btn m-1">Theme</summary>
+  <summary class="btn btn-ghost btn-circle m-1">
+    <PhDesktop class="ph-desktop size-5" />
+    <PhMoon class="ph-moon hidden size-5" />
+    <PhSun class="ph-sun hidden size-5" />
+  </summary>
   <ul
     class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
   >
@@ -16,16 +26,21 @@
     "[data-select-theme]",
   );
 
+  const lightIcon = document.querySelector<SVGElement>(".ph-sun")!;
+  const darkIcon = document.querySelector<SVGElement>(".ph-moon")!;
+  const desktopIcon = document.querySelector<SVGElement>(".ph-desktop")!;
+
   globalThis.addEventListener("DOMContentLoaded", () => {
     initTheme();
     setupThemeButtons();
   });
 
   function applySystemTheme() {
-    const isDarkMode = globalThis.matchMedia(
+    const prefersDark = globalThis.matchMedia(
       "(prefers-color-scheme: dark)",
     ).matches;
-    document.documentElement.dataset.theme = isDarkMode ? "dark" : "light";
+
+    document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
   }
 
   function handleSystemThemeChange() {
@@ -49,23 +64,21 @@
     localStorage.setItem(StorageKey, theme);
 
     updateActiveThemeButton(theme);
+    updateIcons(theme);
   }
 
   function setupThemeButtons() {
-    for (const button of document.querySelectorAll<HTMLButtonElement>(
-      "[data-select-theme]",
-    )) {
+    for (const button of selectThemeButtons) {
       button.addEventListener("click", () => {
-        const theme = button.dataset.selectTheme!;
-        setTheme(theme);
+        setTheme(button.dataset.selectTheme!);
       });
     }
   }
 
   function setupWindowColorSchemeListener() {
-    const mediaQuery = globalThis.matchMedia("(prefers-color-scheme: dark)");
-
-    mediaQuery.addEventListener("change", handleSystemThemeChange);
+    globalThis
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", handleSystemThemeChange);
   }
 
   function updateActiveThemeButton(theme: string) {
@@ -75,5 +88,11 @@
         button.dataset.selectTheme === theme,
       );
     }
+  }
+
+  function updateIcons(theme: string) {
+    lightIcon.classList.toggle("hidden", theme !== "light");
+    darkIcon.classList.toggle("hidden", theme !== "dark");
+    desktopIcon.classList.toggle("hidden", theme !== "system");
   }
 </script>
