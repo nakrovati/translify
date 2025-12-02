@@ -1,4 +1,5 @@
 ---
+import MdiGoogleTranslate from "../assets/icons/MdiGoogleTranslate.astro";
 import PhCopy from "../assets/icons/PhCopy.astro";
 import Layout from "../layouts/Layout.astro";
 ---
@@ -40,14 +41,31 @@ import Layout from "../layouts/Layout.astro";
           rows="5"></textarea>
       </div>
 
-      <button
-        aria-label="Copy result"
-        class="btn btn-square ml-auto"
-        id="copy-btn"
-        type="button"
-      >
-        <PhCopy class="size-6" />
-      </button>
+      <div class="ml-auto">
+        <details class="dropdown dropdown-end">
+          <summary class="btn m-1" id="translate-dropdown-btn"
+            >Translate with</summary
+          >
+          <ul
+            class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+          >
+            <li>
+              <a id="gt-link" target="_blank">
+                <MdiGoogleTranslate class="size-5" />Google Translate
+              </a>
+            </li>
+          </ul>
+        </details>
+
+        <button
+          aria-label="Copy result"
+          class="btn btn-square ml-auto"
+          id="copy-btn"
+          type="button"
+        >
+          <PhCopy class="size-6" />
+        </button>
+      </div>
     </section>
   </div>
 </Layout>
@@ -69,19 +87,40 @@ import Layout from "../layouts/Layout.astro";
     "#transliterate-btn",
   ) as HTMLFormElement;
   const copyBtn = document.querySelector("#copy-btn") as HTMLButtonElement;
+  const translateDropdownBtn = document.querySelector(
+    "#translate-dropdown-btn",
+  ) as HTMLButtonElement;
+
+  const gtLink = document.querySelector("#gt-link") as HTMLAnchorElement;
+  gtLink.addEventListener("pointerdown", () => {
+    gtLink.href = `https://translate.google.com/?sl=ka&tl=en&text=${encodeURIComponent(
+      resultTextarea.value,
+    )}`;
+  });
+
+  function updateTranslateState() {
+    const disabled = !resultTextarea.value.trim();
+    translateDropdownBtn.toggleAttribute("disabled", disabled);
+    translateDropdownBtn.classList.toggle("btn-disabled", disabled);
+  }
 
   sourceTextarea.addEventListener("input", (event) => {
     const target = event.target as HTMLTextAreaElement;
     charCountElement.textContent = String(target.value.length);
   });
 
+  resultTextarea.addEventListener("input", updateTranslateState);
+
   transliterateButton.addEventListener("click", () => {
     const text = sourceTextarea.value;
     resultTextarea.value = transliterate(text);
+    updateTranslateState();
   });
 
   copyBtn.addEventListener("click", () => {
     const copyText = resultTextarea.value;
     navigator.clipboard.writeText(copyText);
   });
+
+  updateTranslateState();
 </script>
