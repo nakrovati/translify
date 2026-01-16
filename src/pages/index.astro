@@ -86,11 +86,13 @@ import Layout from "../layouts/Layout.astro";
   ) as HTMLDivElement;
   const transliterateButton = document.querySelector(
     "#transliterate-btn",
-  ) as HTMLFormElement;
+  ) as HTMLButtonElement;
   const copyBtn = document.querySelector("#copy-btn") as HTMLButtonElement;
   const translateDropdownBtn = document.querySelector(
     "#translate-dropdown-btn",
   ) as HTMLButtonElement;
+
+  const originalCopyBtnHTML = copyBtn.innerHTML;
 
   const gtLink = document.querySelector("#gt-link") as HTMLAnchorElement;
   gtLink.addEventListener("pointerdown", () => {
@@ -98,6 +100,12 @@ import Layout from "../layouts/Layout.astro";
       resultTextarea.value,
     )}`;
   });
+
+  function updateCopyState() {
+    const disabled = !resultTextarea.value.trim();
+    copyBtn.toggleAttribute("disabled", disabled);
+    copyBtn.classList.toggle("btn-disabled", disabled);
+  }
 
   function updateTranslateState() {
     const disabled = !resultTextarea.value.trim();
@@ -111,17 +119,33 @@ import Layout from "../layouts/Layout.astro";
   });
 
   resultTextarea.addEventListener("input", updateTranslateState);
+  resultTextarea.addEventListener("input", updateCopyState);
 
   transliterateButton.addEventListener("click", () => {
     const text = sourceTextarea.value;
     resultTextarea.value = transliterate(text);
+
     updateTranslateState();
+    updateCopyState();
   });
 
-  copyBtn.addEventListener("click", () => {
+  copyBtn.addEventListener("click", async () => {
     const copyText = resultTextarea.value;
-    navigator.clipboard.writeText(copyText);
+    if (!copyText.trim()) return;
+
+    await navigator.clipboard.writeText(copyText);
+
+    copyBtn.textContent = "Copied";
+    copyBtn.classList.add("btn-success");
+    copyBtn.classList.remove("btn-square");
+
+    setTimeout(() => {
+      copyBtn.innerHTML = originalCopyBtnHTML;
+      copyBtn.classList.remove("btn-success");
+      copyBtn.classList.add("btn-square");
+    }, 1000);
   });
 
   updateTranslateState();
+  updateCopyState();
 </script>
