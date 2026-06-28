@@ -57,7 +57,9 @@ function replaceUrls(text: string) {
 
 function restoreUrls(text: string, urlMap: Map<string, string>): string {
   let restoredText = text;
-  for (const [placeholder, url] of urlMap.entries()) {
+  for (const entry of urlMap) {
+    const [placeholder, url] = entry;
+    // eslint-disable-next-line unicorn/no-unsafe-string-replacement
     restoredText = restoredText.replaceAll(placeholder, url);
   }
   return restoredText;

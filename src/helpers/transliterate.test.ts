@@ -57,8 +57,8 @@ describe("transliterate", () => {
 
   describe("URLs", () => {
     test("should transliterate text with http URL to georgian", () => {
-      const text = "ikhilet http://example.com det'alebistvis";
-      const expected = "იხილეთ http://example.com დეტალებისთვის";
+      const text = "ikhilet https://example.com det'alebistvis";
+      const expected = "იხილეთ https://example.com დეტალებისთვის";
 
       const result = transliterate(text);
 

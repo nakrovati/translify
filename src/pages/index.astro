@@ -102,15 +102,15 @@ import Layout from "../layouts/Layout.astro";
   });
 
   function updateCopyState() {
-    const disabled = !resultTextarea.value.trim();
-    copyBtn.toggleAttribute("disabled", disabled);
-    copyBtn.classList.toggle("btn-disabled", disabled);
+    const isDisabled = !resultTextarea.value.trim();
+    copyBtn.toggleAttribute("disabled", isDisabled);
+    copyBtn.classList.toggle("btn-disabled", isDisabled);
   }
 
   function updateTranslateState() {
-    const disabled = !resultTextarea.value.trim();
-    translateDropdownBtn.toggleAttribute("disabled", disabled);
-    translateDropdownBtn.classList.toggle("btn-disabled", disabled);
+    const isDisabled = !resultTextarea.value.trim();
+    translateDropdownBtn.toggleAttribute("disabled", isDisabled);
+    translateDropdownBtn.classList.toggle("btn-disabled", isDisabled);
   }
 
   sourceTextarea.addEventListener("input", (event) => {

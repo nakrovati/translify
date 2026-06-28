@@ -23,7 +23,14 @@ export default defineConfig(
     },
     rules: {
       "unicorn/filename-case": "off",
+      "unicorn/name-replacements": "off",
       "unicorn/prevent-abbreviations": "off",
+    },
+  },
+  {
+    files: ["src/assets/icons/**"],
+    rules: {
+      "perfectionist/sort-jsx-props": "off",
     },
   },
   prettierConfig,

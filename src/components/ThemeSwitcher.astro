@@ -30,15 +30,13 @@ import PhSun from "@assets/icons/PhSun.astro";
   const darkIcon = document.querySelector<SVGElement>(".ph-moon")!;
   const desktopIcon = document.querySelector<SVGElement>(".ph-desktop")!;
 
-  globalThis.addEventListener("DOMContentLoaded", () => {
+  addEventListener("DOMContentLoaded", () => {
     initTheme();
     setupThemeButtons();
   });
 
   function applySystemTheme() {
-    const prefersDark = globalThis.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
+    const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
 
     document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
   }
@@ -76,9 +74,10 @@ import PhSun from "@assets/icons/PhSun.astro";
   }
 
   function setupWindowColorSchemeListener() {
-    globalThis
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", handleSystemThemeChange);
+    matchMedia("(prefers-color-scheme: dark)").addEventListener(
+      "change",
+      handleSystemThemeChange,
+    );
   }
 
   function updateActiveThemeButton(theme: string) {
