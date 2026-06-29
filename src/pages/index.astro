@@ -1,5 +1,6 @@
 ---
 import MdiGoogleTranslate from "@assets/icons/MdiGoogleTranslate.astro";
+import PhClipboardText from "@assets/icons/PhClipboardText.astro";
 import PhCopy from "@assets/icons/PhCopy.astro";
 
 import Layout from "../layouts/Layout.astro";
@@ -20,7 +21,19 @@ import Layout from "../layouts/Layout.astro";
           name="source-text"
           placeholder="Type Gerogian transliterated (Latin) text here"
           rows="5"></textarea>
-        <div aria-live="polite" class="text-right" id="char-count">0</div>
+      </div>
+
+      <div class="flex justify-between gap-2">
+        <div aria-live="polite" id="char-count">0</div>
+
+        <button
+          aria-label="Paste text"
+          class="btn btn-square"
+          id="paste-btn"
+          type="button"
+        >
+          <PhClipboardText class="size-6" />
+        </button>
       </div>
 
       <button
@@ -88,6 +101,7 @@ import Layout from "../layouts/Layout.astro";
     "#transliterate-btn",
   ) as HTMLButtonElement;
   const copyBtn = document.querySelector("#copy-btn") as HTMLButtonElement;
+  const pasteBtn = document.querySelector("#paste-btn") as HTMLButtonElement;
   const translateDropdownBtn = document.querySelector(
     "#translate-dropdown-btn",
   ) as HTMLButtonElement;
@@ -144,6 +158,18 @@ import Layout from "../layouts/Layout.astro";
       copyBtn.classList.remove("btn-success");
       copyBtn.classList.add("btn-square");
     }, 1000);
+  });
+
+  pasteBtn.addEventListener("click", async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+
+      sourceTextarea.value = text;
+
+      sourceTextarea.dispatchEvent(new Event("input", { bubbles: true }));
+    } catch (error) {
+      console.error(error);
+    }
   });
 
   updateTranslateState();
