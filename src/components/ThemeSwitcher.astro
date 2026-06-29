@@ -5,10 +5,10 @@ import PhSun from "@assets/icons/PhSun.astro";
 ---
 
 <details class="dropdown dropdown-end" id="theme-switcher">
-  <summary class="btn btn-ghost btn-circle m-1">
-    <PhDesktop class="ph-desktop size-5" />
-    <PhMoon class="ph-moon hidden size-5" />
-    <PhSun class="ph-sun hidden size-5" />
+  <summary aria-label="Open theme menu" class="btn btn-ghost btn-circle m-1">
+    <PhDesktop aria-hidden="true" class="ph-desktop size-5" />
+    <PhMoon aria-hidden="true" class="ph-moon hidden size-5" />
+    <PhSun aria-hidden="true" class="ph-sun hidden size-5" />
   </summary>
   <ul
     class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
@@ -82,10 +82,10 @@ import PhSun from "@assets/icons/PhSun.astro";
 
   function updateActiveThemeButton(theme: string) {
     for (const button of selectThemeButtons) {
-      button.classList.toggle(
-        "menu-active",
-        button.dataset.selectTheme === theme,
-      );
+      const isActive = button.dataset.selectTheme === theme;
+
+      button.classList.toggle("menu-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
     }
   }
 
